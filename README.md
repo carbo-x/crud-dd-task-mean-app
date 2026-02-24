@@ -233,7 +233,8 @@ docker push $DOCKER_USERNAME/mean-backend:latest
 docker push $DOCKER_USERNAME/mean-frontend:latest
 ```
 
->> ADD SCREENSHOT HERE: Docker Hub showing both mean-backend and mean-frontend images with their tags
+<img width="1919" height="874" alt="image" src="https://github.com/user-attachments/assets/7ed49bd7-c818-48ac-b68f-0649e80adf5d" />
+
 
 ### Why two Dockerfiles?
 
@@ -261,9 +262,10 @@ Frontend Dockerfile uses a two-stage build:
 | 80 | 0.0.0.0/0 | Application |
 | 8080 | Your IP | Jenkins dashboard |
 
->> ADD SCREENSHOT HERE: AWS EC2 console showing the running instance
+<img width="1915" height="911" alt="Screenshot 2026-02-24 115108" src="https://github.com/user-attachments/assets/1ceb52b6-38d2-43ec-a890-d053fd885e93" />
 
->> ADD SCREENSHOT HERE: Security Group inbound rules
+<img width="1919" height="911" alt="Screenshot 2026-02-24 115035" src="https://github.com/user-attachments/assets/784fa055-dfdd-4897-a9a2-22aa1400a971" />
+
 
 ### Install Docker on EC2
 
@@ -304,7 +306,8 @@ mongodb    mongo:6.0                            Up (healthy)
 nginx      nginx:alpine                         Up  0.0.0.0:80->80/tcp
 ```
 
->> ADD SCREENSHOT HERE: Terminal showing docker compose ps with all 4 containers Up
+<img width="1919" height="992" alt="Screenshot 2026-02-24 121816" src="https://github.com/user-attachments/assets/c4431318-3299-410e-a45b-b2487e73f0b4" />
+
 
 ### Test the API
 
@@ -313,9 +316,11 @@ curl http://localhost/api/tutorials
 # Expected: []
 ```
 
->> ADD SCREENSHOT HERE: Browser showing the app UI at http://your-ec2-ip
+<img width="1919" height="971" alt="Screenshot 2026-02-24 121945" src="https://github.com/user-attachments/assets/c5128437-c09b-4595-9f10-fdfb8feecf6a" />
 
->> ADD SCREENSHOT HERE: Tutorials list page with at least one tutorial added to prove it works end to end
+<img width="1919" height="967" alt="Screenshot 2026-02-24 122736" src="https://github.com/user-attachments/assets/dcde8d84-d5cc-4518-b391-f55fb24076e9" />
+
+<img width="1919" height="910" alt="Screenshot 2026-02-24 122822" src="https://github.com/user-attachments/assets/b3530b0d-a27d-4d22-b7b2-c9f75ed226b2" />
 
 ---
 
@@ -332,7 +337,8 @@ Every time you push code to GitHub, Jenkins automatically runs these 6 stages:
 5. Push Images - pushes both images to Docker Hub
 6. Deploy - stops old containers, pulls new images, starts fresh containers
 
->> ADD SCREENSHOT HERE: Jenkins Stage View showing all 6 stages in green columns
+<img width="1919" height="972" alt="Screenshot 2026-02-24 121720" src="https://github.com/user-attachments/assets/967bbe74-5544-48c5-b3b6-cf00cc1443cb" />
+
 
 ### Jenkins credentials to add
 
@@ -346,7 +352,8 @@ Go to: Dashboard > Manage Jenkins > Credentials > System > Global credentials > 
 
 Note: GitHub no longer accepts your account password for Git operations. Create a Personal Access Token at https://github.com/settings/tokens and use that as the password. Tick the repo scope when creating it.
 
->> ADD SCREENSHOT HERE: Jenkins credentials page showing all 3 credentials added
+<img width="1919" height="962" alt="Screenshot 2026-02-24 120533" src="https://github.com/user-attachments/assets/5d12f601-8e47-4ac2-9926-5ba9de0823b2" />
+
 
 ### Create the Pipeline job
 
@@ -360,9 +367,10 @@ Note: GitHub no longer accepts your account password for Git operations. Create 
    - Script Path: Jenkinsfile
 3. Click Save then Build Now
 
->> ADD SCREENSHOT HERE: Jenkins pipeline job configuration page
+<img width="1919" height="970" alt="image" src="https://github.com/user-attachments/assets/8246a703-a03d-43b8-9791-63cc47899b93" />
 
->> ADD SCREENSHOT HERE: Jenkins console output showing Finished: SUCCESS
+
+<img width="1919" height="980" alt="Screenshot 2026-02-24 121514" src="https://github.com/user-attachments/assets/04bb6560-b44a-4f39-939d-751ac1c73b39" />
 
 ### Auto-trigger on every GitHub push (Webhook)
 
@@ -389,7 +397,8 @@ File: nginx/nginx.conf
 
 The frontend container also has its own nginx.conf at frontend/nginx.conf. This one handles Angular client-side routing using try_files so that refreshing the page or navigating directly to a route does not return a 404 error.
 
->> ADD SCREENSHOT HERE: Terminal showing curl http://localhost/api/tutorials returning JSON data
+<img width="1854" height="223" alt="Screenshot 2026-02-24 122517" src="https://github.com/user-attachments/assets/04b93532-16c9-4773-af47-e535a9c1cd2b" />
+
 
 ---
 
