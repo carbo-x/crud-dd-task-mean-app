@@ -1,0 +1,64 @@
+services:
+
+  # 1. MongoDB Database
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db       # save data even if container restarts
+    networks:
+      - mean-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 2. Node.js Backend
+  backend:
+    image: denish952/mean-backend:latest
+    container_name: backend
+    restart: unless-stopped
+    environment:
+      PORT: 8080
+      MONGODB_URL: mongodb://mongodb:27017/dd_db   # connect to mongodb container
+    depends_on:
+      mongodb:
+        condition: service_healthy   # wait for MongoDB to be ready first
+    networks:
+      - mean-network
+
+  # 3. Angular Frontend
+  frontend:
+    image: denish952/mean-frontend:latest
+    container_name: frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - mean-network
+
+  # 4. Nginx Reverse Proxy (entry point for all traffic)
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"                    # only port exposed to the internet
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - mean-network
+
+# Persistent volume for MongoDB data
+volumes:
+  mongo-data:
+
+# Private network so containers can talk to each other
+networks:
+  mean-network:
+    driver: bridge
