@@ -205,7 +205,8 @@ git clone https://github.com/your-username/crud-dd-task-mean-app.git
 cd crud-dd-task-mean-app
 ```
 
->> ADD SCREENSHOT HERE: GitHub repository showing all files and folders in the repo
+<img width="1907" height="802" alt="Screenshot 2026-02-24 114348" src="https://github.com/user-attachments/assets/798cb191-4462-40f4-b4b6-d68bd7071926" />
+
 
 ---
 
