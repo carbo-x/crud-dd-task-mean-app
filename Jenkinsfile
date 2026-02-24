@@ -1,34 +1,44 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB_USER = 'denish136'
+        BACKEND_IMAGE  = "${DOCKERHUB_USER}/mean-backend:latest"
+        FRONTEND_IMAGE = "${DOCKERHUB_USER}/mean-frontend:latest"
+    }
+
     stages {
 
         stage('Clone Code') {
             steps {
-                git branch: 'main', 
-                    credentialsId: 'github-credentials', 
-                    url: 'https://github.com/cx4167/crud-dd-task-mean-app.git'
+                git branch: 'main',
+                    credentialsId: 'github-credentials',
+                    url: 'https://github.com/carbo-x/crud-dd-task-mean-app.git'
             }
         }
 
         stage('Build Backend') {
             steps {
-                sh 'docker build -t denish952/mean-backend:latest ./backend'
+                sh 'docker build -t $BACKEND_IMAGE ./backend'
             }
         }
 
         stage('Build Frontend') {
             steps {
-                sh 'docker build -t denish952/mean-frontend:latest ./frontend'
+                sh 'docker build -t $FRONTEND_IMAGE ./frontend'
             }
         }
 
         stage('Push to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'USERNAME',
+                    passwordVariable: 'PASSWORD'
+                )]) {
                     sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
-                    sh 'docker push denish952/mean-backend:latest'
-                    sh 'docker push denish952/mean-frontend:latest'
+                    sh 'docker push $BACKEND_IMAGE'
+                    sh 'docker push $FRONTEND_IMAGE'
                 }
             }
         }
