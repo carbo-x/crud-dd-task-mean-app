@@ -1,14 +1,12 @@
 pipeline {
     agent any
-
     environment {
         DOCKERHUB_USER = 'denish136'
-        BACKEND_IMAGE  = "${DOCKERHUB_USER}/mean-backend:latest"
-        FRONTEND_IMAGE = "${DOCKERHUB_USER}/mean-frontend:latest"
+        VERSION        = "v${BUILD_NUMBER}"
+        BACKEND_IMAGE  = "${DOCKERHUB_USER}/mean-backend:${VERSION}"
+        FRONTEND_IMAGE = "${DOCKERHUB_USER}/mean-frontend:${VERSION}"
     }
-
     stages {
-
         stage('Clone Code') {
             steps {
                 git branch: 'main',
@@ -16,19 +14,16 @@ pipeline {
                     url: 'https://github.com/carbo-x/crud-dd-task-mean-app.git'
             }
         }
-
         stage('Build Backend') {
             steps {
                 sh 'docker build -t $BACKEND_IMAGE ./backend'
             }
         }
-
         stage('Build Frontend') {
             steps {
                 sh 'docker build -t $FRONTEND_IMAGE ./frontend'
             }
         }
-
         stage('Push to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(
@@ -42,19 +37,16 @@ pipeline {
                 }
             }
         }
-
         stage('Deploy App') {
             steps {
                 sh 'docker compose down || true'
-                sh 'docker compose up -d'
+                sh 'IMAGE_TAG=$VERSION docker compose up -d'
             }
         }
-
     }
-
     post {
         success {
-            echo 'Deployment successful!'
+            echo "Deployment successful! Version: ${VERSION}"
         }
         failure {
             echo 'Something went wrong. Check the logs.'
