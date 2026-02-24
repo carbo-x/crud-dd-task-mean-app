@@ -201,7 +201,7 @@ The containers we started manually earlier were still running. Jenkins was tryin
 ## Step 1 - GitHub Setup
 
 ```bash
-git clone https://github.com/your-username/crud-dd-task-mean-app.git
+git clone https://github.com/carbo-x/crud-dd-task-mean-app.git
 cd crud-dd-task-mean-app
 ```
 
@@ -215,7 +215,7 @@ cd crud-dd-task-mean-app
 ### Build the backend image
 
 ```bash
-export DOCKER_USERNAME=your_dockerhub_username
+export DOCKER_USERNAME=your_dockerhub_username (my case denish136)
 docker build -t $DOCKER_USERNAME/mean-backend:latest ./backend
 ```
 
