@@ -346,8 +346,7 @@ Go to: Dashboard > Manage Jenkins > Credentials > System > Global credentials > 
 
 | Credential ID | Kind | Value |
 |---|---|---|
-| docker-hub-username | Secret text | Your Docker Hub username |
-| docker-hub-password | Secret text | Your Docker Hub password or access token |
+| docker-credentials | Username with password | DockerHub  username + Personal Access Tokenn |
 | github-credentials | Username with password | GitHub username + Personal Access Token |
 
 Note: GitHub no longer accepts your account password for Git operations. Create a Personal Access Token at https://github.com/settings/tokens and use that as the password. Tick the repo scope when creating it.
